@@ -5,9 +5,11 @@ import com.example.demo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,11 +31,6 @@ public class StudentController {
     return "The application is up...";
   }
 
-//    @RequestMapping(value = "createstudent", method = RequestMethod.POST)
-//    public String createStudent(@RequestBody Student student){
-//        return studentService.createStudent(student);
-//    }
-
   @PostMapping(value = "createstudent")
   public ResponseEntity<Student> createStudent(@RequestBody Student student) {
     return Optional.ofNullable(studentService.createStudent(student))
@@ -41,17 +38,17 @@ public class StudentController {
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Student already exists"));
   }
 
-  @RequestMapping(value = "readstudents", method = RequestMethod.GET)
+  @GetMapping(value = "readstudents")
   public List<Student> readStudents() {
     return studentService.readStudents();
   }
 
-  @RequestMapping(value = "updatestudent", method = RequestMethod.PUT)
+  @PutMapping(value = "updatestudent")
   public String updateStudet(@RequestBody Student student) {
     return studentService.updateStudent(student);
   }
 
-  @RequestMapping(value = "deletestudent", method = RequestMethod.DELETE)
+  @DeleteMapping(value = "deletestudent")
   public String deleteStudent(@RequestBody Student student) {
     return studentService.deleteStudent(student);
   }
